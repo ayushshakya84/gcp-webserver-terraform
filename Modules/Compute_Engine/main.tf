@@ -5,7 +5,7 @@ data "vault_kv_secret_v2" "github_token" {
 
 resource "google_service_account" "default" {
   account_id   = "my-custom-sa"
-  display_name = "Custom SA for V Instance"
+  display_name = "Custom SA for VM Instance"
   description = "Service account for computer instances"
 }
 
