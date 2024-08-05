@@ -15,5 +15,6 @@ variable "instances" {
     boot_disk_labels = map(string)
     subnet_id     = string
     tags          = list(string)
+    service_account_id = optional(string)
   }))
 }

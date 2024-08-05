@@ -12,6 +12,7 @@ module "compute_engine" {
       boot_disk_labels = { env = "dev" }
       subnet_id        = module.virtual_network.subnet_id
       tags             = ["web", "dev"]
+      service_account_id = "my-custom-sa-1"
     }
     instance2 = {
       name             = "instance-2"
@@ -27,15 +28,30 @@ module "compute_engine" {
   }
 }
 
+# module "virtual_network" {
+#   source           = "./Modules/virtual_network"
+#   network_name     = "vpc-network"
+#   subnetwork_name  = "test-subnetwork"
+#   subnetwork_cidr  = "10.2.0.0/16"
+#   region           = "us-central1"
+#   allow_ports      = ["80", "22"]
+#   source_ip_ranges = ["0.0.0.0/0"]
+
+# }
+
 module "virtual_network" {
   source           = "./Modules/virtual_network"
-  network_name     = "vpc-network"
-  subnetwork_name  = "test-subnetwork"
-  subnetwork_cidr  = "10.2.0.0/16"
-  region           = "us-central1"
-  allow_ports      = ["80", "22"]
-  source_ip_ranges = ["0.0.0.0/0"]
-
+  subnetwork_name =  "test-subnetwork"
+  subnetwork_cidr =  "10.2.0.0/16"
+  region = "us-central1"
+  
+  vpc = {
+    vpc1 = {
+    name = "my-vpc"
+    auto_create_subnetworks = false
+    mtu = 11
+    }
+  }
 }
 
 module "load_balancer" {

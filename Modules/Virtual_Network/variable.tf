@@ -1,6 +1,10 @@
-variable "network_name" {
+variable "vpc" {
   description = "The name of the vpc network"
-  type = string
+  type = map(object({
+    name = string
+    auto_create_subnetworks = bool
+    mtu = number
+  }))
 }
 
 variable "subnetwork_name" {

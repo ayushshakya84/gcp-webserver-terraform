@@ -3,11 +3,18 @@ data "vault_kv_secret_v2" "github_token" {
   name  = "github_token"
 }
 
-resource "google_service_account" "default" {
-  account_id   = "my-custom-sa"
-  display_name = "Custom SA for VM Instance"
-  description = "Service account for computer instances"
+# resource "google_service_account" "default" {
+#   account_id   = "my-custom-sa"
+#   display_name = "Custom SA for VM Instance"
+#   description = "Service account for computer instances"
+# }
+resource "google_service_account" "custom" {
+  for_each = { for k, v in var.instances : k => v if v.service_account_id != null }
+  account_id   = each.value.service_account_id
+  display_name = "Custom Service Account for Instances"
+  description  = "Service account for compute instances"
 }
+
 
 resource "google_compute_instance" "default" {
   for_each     = var.instances
@@ -38,9 +45,17 @@ resource "google_compute_instance" "default" {
     foo = "bar"
   }
 
-  service_account {
-    email  = google_service_account.default.email
-    scopes = ["cloud-platform"]
+#   service_account {
+#     email  = google_service_account.default.email
+#     scopes = ["cloud-platform"]
+#   }
+# }
+dynamic "service_account" {
+    for_each = each.value.service_account_id != null ? [each.value] : []
+    content {
+      email  = google_service_account.custom[each.key].email
+      scopes = ["cloud-platform"]
+    }
   }
 }
 
