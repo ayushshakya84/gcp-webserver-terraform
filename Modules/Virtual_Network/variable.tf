@@ -7,8 +7,14 @@ variable "vpc" {
   }))
 }
 
-variable "subnetwork_name" {
+variable "subnetwork" {
   description = "The Name of the Subnetwork"
+  type = map(object({
+    subnetwork_name = string
+    subnetwork_cidr = string
+    
+  }))
+
   type = string
 }
 
