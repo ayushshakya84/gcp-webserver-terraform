@@ -1,5 +1,5 @@
 module "compute_engine" {
-  source = "./Modules/compute_engine"
+  source = "./Modules/Compute_Engine"
 
   instances = {
     instance1 = {
@@ -29,7 +29,7 @@ module "compute_engine" {
 }
 
 module "virtual_network" {
-  source = "./Modules/virtual_network"
+  source = "./Modules/Virtual_Network"
   subnetwork = {
     subnetwork1 = {
       subnetwork_name   = "test-subnetwork"
@@ -49,7 +49,7 @@ module "virtual_network" {
 }
 
 module "load_balancer" {
-  source                   = "./modules/load_balancer"
+  source                   = "./Modules/load_balancer"
   region                   = "us-central1"
   instance_group_self_link = module.compute_engine.instance_group_self_link
 }
