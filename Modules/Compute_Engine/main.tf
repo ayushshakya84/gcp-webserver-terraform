@@ -26,6 +26,10 @@ resource "google_compute_instance" "default" {
     subnetwork = each.value.subnet_id
   }
 
+  lifecycle {
+    ignore_changes = [ metadata ]
+  }
+
   metadata = {
     foo = "bar"
   }
