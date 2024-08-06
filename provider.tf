@@ -8,7 +8,7 @@ terraform {
 }
 
 provider "google" {
-  project = "lexical-drake-423604-d4"
+  project = "skilful-ethos-429115-u8"
   region  = "us-west1"
 
 }

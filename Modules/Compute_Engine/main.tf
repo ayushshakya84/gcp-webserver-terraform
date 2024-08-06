@@ -30,10 +30,10 @@ resource "google_compute_instance" "default" {
 
   network_interface {
     subnetwork = each.value.subnet_id
-
-    access_config {
-      // Ephemeral public IP
-    }
+    
+    # access_config {
+    #   // Ephemeral public IP
+    # }
   }
 
   metadata = {
