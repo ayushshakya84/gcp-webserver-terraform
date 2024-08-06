@@ -1,40 +1,39 @@
 variable "vpc" {
   description = "The name of the vpc network"
   type = map(object({
-    name = string
+    name                    = string
     auto_create_subnetworks = bool
-    mtu = number
+    mtu                     = number
   }))
 }
 
 variable "subnetwork" {
   description = "The Name of the Subnetwork"
   type = map(object({
-    subnetwork_name = string
-    subnetwork_cidr = string
-    
+    subnetwork_name   = string
+    subnetwork_cidr   = string
+    subnetwork_region = string
+    vpc_id           = string
   }))
-
-  type = string
 }
 
-variable "subnetwork_cidr" {
-  description = "The CIDR rage of the subnetwork"
-  type = string
-}
+# variable "subnetwork_cidr" {
+#   description = "The CIDR rage of the subnetwork"
+#   type = string
+# }
 
-variable "region" {
-  description = "The region where the network resources will be created"
-  type = string
-}
+# variable "region" {
+#   description = "The region where the network resources will be created"
+#   type = string
+# }
 
 variable "allow_ports" {
   description = "List of ports to allow in the firewall"
-  type = list(string)
-  default = ["80", "22"]
+  type        = list(string)
+  default     = ["80", "22"]
 }
 variable "source_ip_ranges" {
   description = "List of ip to allow in the firewall"
-  type = list(string)
-  default = ["0.0.0.0/0"]
+  type        = list(string)
+  default     = ["0.0.0.0/0"]
 }

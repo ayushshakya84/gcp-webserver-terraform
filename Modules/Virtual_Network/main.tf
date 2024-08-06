@@ -6,18 +6,18 @@ resource "google_compute_network" "vpc_network" {
 }
 
 resource "google_compute_subnetwork" "network-with-public" {
-  for_each      = var.vpc
-  name          = var.subnetwork_name
-  ip_cidr_range = var.subnetwork_cidr
-  region        = var.region
-  network       = google_compute_network.vpc_network[each.key].self_link
+  for_each      = var.subnetwork
+  name          = each.value.subnetwork_name
+  region        = each.value.subnetwork_region
+  ip_cidr_range = each.value.subnetwork_cidr
+  network       = each.value.vpc_id
 }
 
 
 resource "google_compute_firewall" "default" {
-  for_each      = var.vpc
-  name    = "default-firewall"
-  network = google_compute_network.vpc_network[each.key].self_link
+  for_each = var.vpc
+  name     = "default-firewall"
+  network  = google_compute_network.vpc_network[each.key].self_link
   dynamic "allow" {
     for_each = var.allow_ports
     iterator = port
