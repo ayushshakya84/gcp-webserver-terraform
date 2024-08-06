@@ -1,15 +1,9 @@
-data "vault_kv_secret_v2" "github_token" {
-  mount = "secret"
-  name  = "github_token"
-}
-
 resource "google_service_account" "custom" {
   for_each     = { for k, v in var.instances : k => v if v.service_account_id != null }
   account_id   = each.value.service_account_id
   display_name = "Custom Service Account for Instances"
   description  = "Service account for compute instances"
-}
-
+} 
 
 resource "google_compute_instance" "default" {
   for_each     = var.instances
@@ -30,10 +24,6 @@ resource "google_compute_instance" "default" {
 
   network_interface {
     subnetwork = each.value.subnet_id
-    
-    # access_config {
-    #   // Ephemeral public IP
-    # }
   }
 
   metadata = {

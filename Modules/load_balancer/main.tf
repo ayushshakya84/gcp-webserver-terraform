@@ -1,7 +1,7 @@
-# resource "google_compute_global_address" "default" {
-#   name = "global-address"
-#   address_type = "EXTERNAL"
-# }
+resource "google_compute_global_address" "default" {
+  name = "global-address"
+  address_type = "EXTERNAL"
+}
 
 resource "google_compute_http_health_check" "default" {
   name                = "http-basic-check"
@@ -36,5 +36,5 @@ resource "google_compute_global_forwarding_rule" "default" {
   name       = "http-content-rule"
   target     = google_compute_target_http_proxy.default.self_link
   port_range = "80"
-  ip_address = "34.54.12.112"
+  ip_address = google_compute_global_address.default.address
 }

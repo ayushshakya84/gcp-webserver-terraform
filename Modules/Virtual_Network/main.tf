@@ -11,6 +11,7 @@ resource "google_compute_subnetwork" "network-with-public" {
   region        = each.value.subnetwork_region
   ip_cidr_range = each.value.subnetwork_cidr
   network       = each.value.vpc_id
+  depends_on = [ google_compute_network.vpc_network ]
 }
 
 
