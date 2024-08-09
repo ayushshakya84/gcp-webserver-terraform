@@ -1,5 +1,5 @@
 resource "google_compute_global_address" "default" {
-  name = "global-address"
+  name         = "global-address"
   address_type = "EXTERNAL"
 }
 

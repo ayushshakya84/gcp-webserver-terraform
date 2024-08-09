@@ -11,23 +11,23 @@ resource "google_compute_subnetwork" "network-with-public" {
   region        = each.value.subnetwork_region
   ip_cidr_range = each.value.subnetwork_cidr
   network       = each.value.vpc_id
-  depends_on = [ google_compute_network.vpc_network ]
+  depends_on    = [google_compute_network.vpc_network]
 }
 
 
 resource "google_compute_firewall" "default" {
-  for_each = var.vpc
-  name     = "default-firewall"
-  network  = google_compute_network.vpc_network[each.key].self_link
+  for_each = var.firewall
+  name     = each.value.name
+  network  = each.value.network
   dynamic "allow" {
-    for_each = var.allow_ports
-    iterator = port
+    for_each = var.firewall
     content {
-      protocol = "tcp"
-      ports    = [port.value]
+      protocol = each.value.protocol
+      ports    = each.value.ports
     }
   }
 
-  source_ranges = var.source_ip_ranges
+  source_ranges = each.value.source_ranges
+  target_tags   = each.value.target_tags
 }
 

@@ -13,27 +13,18 @@ variable "subnetwork" {
     subnetwork_name   = string
     subnetwork_cidr   = string
     subnetwork_region = string
-    vpc_id           = string
+    vpc_id            = string
   }))
 }
 
-# variable "subnetwork_cidr" {
-#   description = "The CIDR rage of the subnetwork"
-#   type = string
-# }
-
-# variable "region" {
-#   description = "The region where the network resources will be created"
-#   type = string
-# }
-
-variable "allow_ports" {
-  description = "List of ports to allow in the firewall"
-  type        = list(string)
-  default     = ["80", "22"]
-}
-variable "source_ip_ranges" {
-  description = "List of ip to allow in the firewall"
-  type        = list(string)
-  default     = ["0.0.0.0/0"]
+variable "firewall" {
+  description = "List of firewall rules"
+  type = map(object({
+    name          = string
+    network       = string
+    protocol      = string
+    ports         = list(string)
+    source_ranges = list(string)
+    target_tags   = list(string)
+  }))
 }

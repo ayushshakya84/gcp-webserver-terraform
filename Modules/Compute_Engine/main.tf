@@ -3,7 +3,7 @@ resource "google_service_account" "custom" {
   account_id   = each.value.service_account_id
   display_name = "Custom Service Account for Instances"
   description  = "Service account for compute instances"
-} 
+}
 
 resource "google_compute_instance" "default" {
   for_each     = var.instances
@@ -27,7 +27,7 @@ resource "google_compute_instance" "default" {
   }
 
   lifecycle {
-    ignore_changes = [ metadata ]
+    ignore_changes = [metadata]
   }
 
   metadata = {
